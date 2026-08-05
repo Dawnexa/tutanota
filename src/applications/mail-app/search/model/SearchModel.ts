@@ -245,6 +245,16 @@ export class SearchModel {
 							}
 						}
 
+						const placeToSearch = wrapper.event.location.toLowerCase()
+						for (const token of tokens) {
+							console.log("Checking token", token, "against place", placeToSearch)
+							if (placeToSearch.includes(token)) {
+								alreadyAdded.add(key)
+								calendarResult.results.push(wrapper.event._id)
+								continue eventLoop
+							}
+						}
+
 						if (this.cancelSignal()) {
 							this.result(calendarResult)
 							this.lastSearchPromise = Promise.resolve(calendarResult)
